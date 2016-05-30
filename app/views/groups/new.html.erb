@@ -1,0 +1,11 @@
+Create A Group!
+
+<%= form_for @group do |f| %>
+  <p>
+  What would you like to call the group?
+  <%= f.text_field :name, :required => true %>
+  </p>
+
+
+<%= f.submit "Make Group" %>
+<% end %>

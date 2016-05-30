@@ -8,6 +8,23 @@
 </head>
 <body>
 
+
+<nav>
+  <ul>
+    <% if @current_user.present? %>
+
+    <p>Welcome <a><%= @current_user.name%> </a></p>
+          <%= link_to "log out", logout_path, :method => :delete %>
+
+    <% else %>
+<li>
+<%= link_to "Log In", login_path %>
+</li>
+    <% end %>
+  </ul>
+</nav>
+
+
 <%= yield %>
 
 </body>
