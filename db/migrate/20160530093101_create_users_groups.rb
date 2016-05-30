@@ -4,6 +4,8 @@ class CreateUsersGroups < ActiveRecord::Migration
       t.integer :user_id
       t.integer :group_id
       t.integer :member_type
+
+      t.timestamps null: false
     end
   end
 end
