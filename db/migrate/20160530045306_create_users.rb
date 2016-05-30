@@ -5,7 +5,6 @@ class CreateUsers < ActiveRecord::Migration
       t.text :email
       t.text :bio
       t.text :password_digest
-      integer :user_type
       t.text :image
 
       t.timestamps null: false
