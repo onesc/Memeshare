@@ -26,6 +26,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'cancancan', '~> 1.10'
 
+gem 'carrierwave'
 
 gem 'acts-as-taggable-on', '~> 3.4'
 

@@ -18,6 +18,9 @@
     <li>
       <%= link_to "Join Group", new_users_group_path %>
     </li>
+    <li>
+      <%= link_to "Upload Meme", new_image_path %>
+    </li>
     <p>Welcome <a><%= @current_user.name%> </a></p>
           <%= link_to "log out", logout_path, :method => :delete %>
 

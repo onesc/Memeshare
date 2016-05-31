@@ -1,0 +1,26 @@
+<%= form_for @image do |f| %>
+  <p>
+  <%= f.label :image %>
+  <%= f.file_field :image, :required => true %>
+</p>
+
+<p>
+<%= f.label :Caption %> (optional)
+<%= f.text_field :caption, :required => false %>
+</p>
+
+<% Group.all.each do |g| %>
+    <% UsersGroup.all.each do |mb| %>
+        <% if mb.user_id == @current_user.id && mb.group_id == g.id %>
+          <li>
+              <%= link_to g.name, g %>
+              <%= radio_button("group_id", "group_id", g.id) %>
+          </li>
+        <% end %>
+    <% end %>
+<% end %>
+
+
+
+<%= f.submit "Upload Image" %>
+<% end %>

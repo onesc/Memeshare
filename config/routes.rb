@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     delete '/users_groups' => 'users_groups#destroy', :as  =>'leave_group'
 
   resources :users_groups, :only => [:new, :create]
+  resources :images, :only => [:new, :show, :create, :edit, :update]
 
 resources :groups, :only => [:new, :show, :create, :index, :edit, :update]
 resources :users, :only => [:new, :create, :index, :edit, :update]

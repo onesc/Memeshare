@@ -22,6 +22,8 @@ class GroupsController < ApplicationController
 
   def show
       @group = Group.find params[:id]
+      @images = Image.where(group_id: @group.id)
+  
       @group_members = []
       UsersGroup.all.each do |ug|
           if ug.group_id == @group.id

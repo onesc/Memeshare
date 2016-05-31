@@ -8,3 +8,7 @@ Join Code:  <%= @group.join_code %>
 </p>
 
 <%= link_to("Leave Group",leave_group_path(@group), :method => :delete) %>
+
+<% @images.each do |i| %>
+<%= i %>
+<% end %>
