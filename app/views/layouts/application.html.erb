@@ -12,7 +12,9 @@
 <nav>
   <ul>
     <% if @current_user.present? %>
-
+    <li>
+      <%= link_to "Create Group", new_group_path %>
+    </li>
     <p>Welcome <a><%= @current_user.name%> </a></p>
           <%= link_to "log out", logout_path, :method => :delete %>
 
@@ -20,9 +22,12 @@
 <li>
 <%= link_to "Log In", login_path %>
 </li>
+
     <% end %>
   </ul>
 </nav>
+
+
 
 
 <%= yield %>

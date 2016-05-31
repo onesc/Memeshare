@@ -1,4 +1,6 @@
 class GroupsController < ApplicationController
+    before_action :authorise, :only => [:new]
+
   def new
       @group = Group.new
   end
@@ -18,6 +20,10 @@ class GroupsController < ApplicationController
       end
   end
 
+  def show
+      @group = Group.find params[:id]
+  end
+
 
 
     private
@@ -27,7 +33,7 @@ class GroupsController < ApplicationController
 
     def creator
       member_ass = UsersGroup.new(user_id: @current_user.id, group_id: @group.id, member_type: 0)
-      
+
       member_ass.save
     end
 
@@ -37,6 +43,6 @@ class GroupsController < ApplicationController
 
 
     def authorise
-      redirect_to login_path unless session[:user_id].present? && @current_user.admin?
+      redirect_to home_path unless session[:user_id].present?
     end
 end

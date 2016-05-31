@@ -1,1 +1,22 @@
 Hello!
+
+
+<% if @current_user.present? %>
+<p>
+You belong to these groups
+<% @groups.each do |g| %>
+
+    <% UsersGroup.all.each do |mb| %>
+        <% if mb.user_id == @current_user.id && mb.group_id == g.id %>
+          <li>
+            <%= g.name %>
+          </li>
+        <% end %>
+    <% end %>
+<% end %>
+</p>
+<% end %>
+
+
+<!-- loop through each group -->
+<!-- if t -->
