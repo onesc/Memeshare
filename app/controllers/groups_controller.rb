@@ -22,8 +22,19 @@ class GroupsController < ApplicationController
 
   def show
       @group = Group.find params[:id]
+      @group_members = []
+      UsersGroup.all.each do |ug|
+          if ug.group_id == @group.id
+            @group_members << User.find_by(id: ug.user_id).name
+          end
+      end
+
       authorise_member
   end
+
+
+
+
 
 
 
@@ -32,11 +43,12 @@ class GroupsController < ApplicationController
       params.require(:group).permit(:name, :join_code)
     end
 
+
     def creator
       member_ass = UsersGroup.new(user_id: @current_user.id, group_id: @group.id, member_type: 0)
-
       member_ass.save
     end
+
 
     def comment_params
        params.require(:user_group).permit(:user_id, :group_id, :member_type)

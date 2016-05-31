@@ -3,6 +3,10 @@ Rails.application.routes.draw do
     post '/login' => 'session#create'
     delete '/login' => 'session#destroy', :as => 'logout'
 
+    delete '/users_groups' => 'users_groups#destroy', :as  =>'leave_group'
+
+  resources :users_groups, :only => [:new, :create]
+
 resources :groups, :only => [:new, :show, :create, :index, :edit, :update]
 resources :users, :only => [:new, :create, :index, :edit, :update]
   root 'welcome#index', :as => 'home'

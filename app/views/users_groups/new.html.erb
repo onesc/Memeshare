@@ -1,0 +1,12 @@
+JOIN A GROUP
+
+
+<%= form_for @new_member do |f| %>
+  <p>
+  <%= f.label :Join_code %>
+  <%= f.text_field :user_id, :required => true %>
+  </p>
+
+
+<%= f.submit "Join Group" %>
+<% end %>

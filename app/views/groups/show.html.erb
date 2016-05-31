@@ -2,3 +2,9 @@
 Group Name:  <b> <%= @group.name %> </b> </br>
 Join Code:  <%= @group.join_code %>
 </p>
+<p>
+  <h2>Members </h2>
+  <%= @group_members %>
+</p>
+
+<%= link_to("Leave Group",leave_group_path(@group), :method => :delete) %>
