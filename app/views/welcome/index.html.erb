@@ -9,7 +9,7 @@ You belong to these groups
     <% UsersGroup.all.each do |mb| %>
         <% if mb.user_id == @current_user.id && mb.group_id == g.id %>
           <li>
-            <%= g.name %>
+              <%= link_to g.name, g %>
           </li>
         <% end %>
     <% end %>

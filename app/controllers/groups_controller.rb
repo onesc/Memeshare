@@ -22,6 +22,7 @@ class GroupsController < ApplicationController
 
   def show
       @group = Group.find params[:id]
+      authorise_member
   end
 
 
@@ -45,4 +46,15 @@ class GroupsController < ApplicationController
     def authorise
       redirect_to home_path unless session[:user_id].present?
     end
+
+    def authorise_member
+      authorised = false
+        UsersGroup.all.each do |ug|
+            if ug.user_id == session[:user_id] && ug.group_id == @group.id
+              authorised = true
+            end
+        end
+      redirect_to home_path unless authorised == true
+    end
+
 end

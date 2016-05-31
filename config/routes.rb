@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     post '/login' => 'session#create'
     delete '/login' => 'session#destroy', :as => 'logout'
 
-resources :groups, :only => [:new, :create, :index, :edit, :update]
+resources :groups, :only => [:new, :show, :create, :index, :edit, :update]
 resources :users, :only => [:new, :create, :index, :edit, :update]
   root 'welcome#index', :as => 'home'
   # The priority is based upon order of creation: first created -> highest priority.
