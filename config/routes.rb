@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     post '/login' => 'session#create'
     delete '/login' => 'session#destroy', :as => 'logout'
 
+    delete 'delete_image' => 'images#destroy', :as => 'delete_image'
     delete '/users_groups' => 'users_groups#destroy', :as  =>'leave_group'
 
   resources :users_groups, :only => [:new, :create]

@@ -21,8 +21,14 @@ class ImagesController < ApplicationController
   end
 
   def show
-
       @image = Image.find params[:id]
+  end
+
+  def destroy
+   @image = Image.find params[:format]
+   authorise_admin
+
+   redirect_to home_path
   end
 
 
@@ -49,8 +55,25 @@ class ImagesController < ApplicationController
       flash[:error] = "You are not authorised to view this image"
       redirect_to home_path
     end
-
   end
+
+  def authorise_admin
+    # if the usersgroup table lists has a member type of 0 or 2, they may delete the photo
+      authorised = false
+        UsersGroup.all.each do |ug|
+              if ug.user_id == session[:user_id] && ug.group_id == @image.group_id
+                    if ug.member_type == 0 || session[:user_id] == @image.user.id
+                    authorised = true
+                    @image.destroy
+                    end
+              end
+        end
+        unless authorised == true
+          flash[:error] = "You are not authorised to delete this image"
+        end
+  end
+
+
 
 
 end
