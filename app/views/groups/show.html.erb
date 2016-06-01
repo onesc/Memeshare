@@ -1,6 +1,7 @@
 <p>
 Group Name:  <b> <%= @group.name %> </b> </br>
 Join Code:  <%= @group.join_code %>
+<%= link_to("Admin Page", admin_page_path(@group), :method => :get) %>
 </p>
 <p>
   <h2>Members </h2>
@@ -14,6 +15,9 @@ Join Code:  <%= @group.join_code %>
    <%= link_to "View Image", i %><img src = <%=i.image.url%>> </br>
 Uploaded on: <%=  i.created_at %> by <%= User.find(i.user_id).name %>
 </br>
+<p>
+<%= i.caption %>
+</p>
 
 <hr>
 </li>

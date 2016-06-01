@@ -23,18 +23,43 @@ class GroupsController < ApplicationController
   def show
       @group = Group.find params[:id]
       @images = Image.where(group_id: @group.id)
-  
+
       @group_members = []
       UsersGroup.all.each do |ug|
           if ug.group_id == @group.id
-            @group_members << User.find_by(id: ug.user_id).name
+            @group_members << User.find_by(id: ug.user_id)
           end
       end
 
       authorise_member
   end
 
+  def admin
+    @group = Group.find params[:format]
+    @group_members = []
+    UsersGroup.all.each do |ug|
+        if ug.group_id == @group.id
+          case ug.member_type
+          when 0
+            member_value = "Creator"
+          when 1
+            member_value = "Moderator"
+          when 2
+            member_value = "Member"
+          end
 
+          @group_members << [User.find_by(id: ug.user_id).name, member_value, ug.user_id]
+        end
+    end
+  end
+
+  def member_change
+
+
+      change_member_value(params[:user_id], params[:group_id], params[:change_value])
+
+      redirect_to Group.find(params[:group_id])
+  end
 
 
 
@@ -69,6 +94,12 @@ class GroupsController < ApplicationController
             end
         end
       redirect_to home_path unless authorised == true
+    end
+
+    def change_member_value(user_id, group_id, change_value)
+      @ug = UsersGroup.find_by(user_id: user_id, group_id: group_id)
+
+      @ug.update_attribute(:member_type, change_value.to_i)
     end
 
 end

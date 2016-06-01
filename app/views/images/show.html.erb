@@ -1,2 +1,6 @@
 <img src = <%=@image.image.url%>> </br>
 <%= link_to("Delete Image", delete_image_path(@image), :method => :delete) %>
+<p>
+<%= @image.caption %>  
+</p>
+Uploaded on: <%=  @image.created_at %> by <%= User.find(@image.user_id).name %>

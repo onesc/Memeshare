@@ -1,0 +1,27 @@
+<p>
+  Admin page for <b><%= @group.name %> </b>
+</p>
+
+<p>
+  The Join Code is: <b><%= @group.join_code %> </b>
+</p>
+<br/>
+<h3>Members</h3>
+<p>
+    <% @group_members.each do |m| %>
+    <li>
+      <%= m[0] %> - <%= m[1] %>
+    </li>
+    <% end %>
+</p>
+
+<%=  @group_members %>
+
+<p>
+<%= form_tag("/change_member", method: "post") do %>
+<%= hidden_field_tag(:group_id, @group.id) %>
+<%= select_tag :user_id, options_for_select(@group_members.each) %>
+<%= select_tag :change_value, options_for_select([['Moderator', 1], ['Member', 2], ['Remove', 3]]) %>
+<%= submit_tag("Change Member")  %>
+<% end %>
+</p>

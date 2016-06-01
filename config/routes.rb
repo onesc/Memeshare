@@ -6,6 +6,10 @@ Rails.application.routes.draw do
     delete 'delete_image' => 'images#destroy', :as => 'delete_image'
     delete '/users_groups' => 'users_groups#destroy', :as  =>'leave_group'
 
+    get '/admin_page' => 'groups#admin', :as => 'admin_page'
+
+    post '/change_member' => 'groups#member_change', :as => 'member_change'
+
   resources :users_groups, :only => [:new, :create]
   resources :images, :only => [:new, :show, :create, :edit, :update]
 
