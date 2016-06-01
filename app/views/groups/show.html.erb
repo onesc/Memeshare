@@ -9,6 +9,12 @@ Join Code:  <%= @group.join_code %>
 
 <%= link_to("Leave Group",leave_group_path(@group), :method => :delete) %>
 
-<% @images.each do |i| %>
-<%= i %>
+<% @images.reverse.each do |i| %>
+<li>
+<img src = <%=i.image.url%>> </br>
+Uploaded on: <%=  i.created_at %> by <%= User.find(i.user_id).name %>
+</br>
+
+<hr>
+</li>
 <% end %>

@@ -9,12 +9,15 @@
 <%= f.text_field :caption, :required => false %>
 </p>
 
+
+
 <% Group.all.each do |g| %>
     <% UsersGroup.all.each do |mb| %>
         <% if mb.user_id == @current_user.id && mb.group_id == g.id %>
           <li>
               <%= link_to g.name, g %>
               <%= radio_button("group_id", "group_id", g.id) %>
+
           </li>
         <% end %>
     <% end %>

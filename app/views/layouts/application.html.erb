@@ -8,6 +8,12 @@
 </head>
 <body>
 
+    <% if flash[:error].present? %>
+      <h2 class="error">
+        <%= flash[:error] %>
+      </h2>
+    <% end %>
+
 
 <nav>
   <ul>
