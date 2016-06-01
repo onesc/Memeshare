@@ -4,7 +4,16 @@
 
 <p>
   The Join Code is: <b><%= @group.join_code %> </b>
+  <% if @group.joinable == true %>
+  <p>The Group is Currently<b> Joinable </b></p>
+  <%= link_to "Disable Join Code", {:controller => "groups", :action => "toggle_joinable", :group_id => @group.id} %>
+  <% else %>
+  <p>The Group is Currently <b> Unjoinable </b></p>
+  <%= link_to "Enable Join Code", {:controller => "groups", :action => "toggle_joinable", :group_id => @group.id} %>
+  <% end %>
 </p>
+
+
 <br/>
 <h3>Members</h3>
 <p>
@@ -15,13 +24,13 @@
     <% end %>
 </p>
 
-<%=  @group_members %>
+
 
 <p>
 <%= form_tag("/change_member", method: "post") do %>
 <%= hidden_field_tag(:group_id, @group.id) %>
 <%= select_tag :user_id, options_for_select(@group_members.each) %>
-<%= select_tag :change_value, options_for_select([['Moderator', 1], ['Member', 2], ['Remove', 3]]) %>
+<%= select_tag :change_value, options_for_select([['Creator', 0],['Moderator', 1], ['Member', 2], ['Remove', 3]]) %>
 <%= submit_tag("Change Member")  %>
 <% end %>
 </p>

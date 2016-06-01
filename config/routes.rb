@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
     post '/change_member' => 'groups#member_change', :as => 'member_change'
 
+    get '/toggle_joinable' => 'groups#toggle_joinable'
+
   resources :users_groups, :only => [:new, :create]
   resources :images, :only => [:new, :show, :create, :edit, :update]
 

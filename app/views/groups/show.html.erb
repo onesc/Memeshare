@@ -1,11 +1,18 @@
 <p>
 Group Name:  <b> <%= @group.name %> </b> </br>
 Join Code:  <%= @group.join_code %>
-<%= link_to("Admin Page", admin_page_path(@group), :method => :get) %>
+<% UsersGroup.all.each do |ug| %>
+  <%  if ug.user_id == session[:user_id] && ug.group_id == @group.id && ug.member_type == 0 %>
+    <%= link_to("Admin Page", admin_page_path(@group), :method => :get) %>
+  <%  end %>
+<% end %>
+
 </p>
 <p>
   <h2>Members </h2>
-  <%= @group_members %>
+  <% @group_members.each do |m| %>
+      <%= m.name %> <br/>
+  <% end %>
 </p>
 
 <%= link_to("Leave Group",leave_group_path(@group), :method => :delete) %>

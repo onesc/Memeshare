@@ -12,7 +12,7 @@ class UsersGroupsController < ApplicationController
 
  def create
    @joincode = params["users_group"]["user_id"]
-   @group_id = Group.find_by(join_code: @joincode).id
+   @group = Group.find_by(join_code: @joincode)
    if Group.find_by(join_code: @joincode) == nil
      redirect_to home_path
    else
@@ -31,13 +31,14 @@ end
 
 
  private
-  def find_group
-    Group.find_by(join_code: @joincode).id
-  end
 
   def join
-    member_ass = UsersGroup.new(user_id: @current_user.id, group_id: @group_id, member_type: 2)
-    member_ass.save
+    if @group.joinable == true
+      member_ass = UsersGroup.new(user_id: @current_user.id, group_id: @group.id, member_type: 2)
+      member_ass.save
+    else
+      flash[:error] = "That group is not currently joinable"
+    end
   end
 
   def authorise_member

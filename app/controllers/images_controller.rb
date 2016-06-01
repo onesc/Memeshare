@@ -22,6 +22,7 @@ class ImagesController < ApplicationController
 
   def show
       @image = Image.find params[:id]
+      @group = Group.find(@image.group_id)
   end
 
   def destroy
@@ -62,7 +63,7 @@ class ImagesController < ApplicationController
       authorised = false
         UsersGroup.all.each do |ug|
               if ug.user_id == session[:user_id] && ug.group_id == @image.group_id
-                    if ug.member_type == 0 || session[:user_id] == @image.user.id
+                    if ug.member_type == 0 || session[:user_id] == @image.user.id || ug.member_type == 1
                     authorised = true
                     @image.destroy
                     end

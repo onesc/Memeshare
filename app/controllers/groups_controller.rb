@@ -35,7 +35,9 @@ class GroupsController < ApplicationController
   end
 
   def admin
+
     @group = Group.find params[:format]
+    authorise_admin
     @group_members = []
     UsersGroup.all.each do |ug|
         if ug.group_id == @group.id
@@ -53,12 +55,15 @@ class GroupsController < ApplicationController
     end
   end
 
+  def toggle_joinable
+  toggle(params[:group_id])
+  redirect_to admin_page_path(@group)
+  end
+
   def member_change
 
-
       change_member_value(params[:user_id], params[:group_id], params[:change_value])
-
-      redirect_to Group.find(params[:group_id])
+      redirect_to admin_page_path(Group.find(params[:group_id]))
   end
 
 
@@ -70,6 +75,14 @@ class GroupsController < ApplicationController
       params.require(:group).permit(:name, :join_code)
     end
 
+    def toggle (group_id)
+      @group = Group.find(group_id)
+      if @group.joinable == true
+        @group.update_attribute(:joinable, false)
+      else
+        @group.update_attribute(:joinable, true)
+      end
+    end
 
     def creator
       member_ass = UsersGroup.new(user_id: @current_user.id, group_id: @group.id, member_type: 0)
@@ -96,10 +109,31 @@ class GroupsController < ApplicationController
       redirect_to home_path unless authorised == true
     end
 
+
+
+    def authorise_admin
+      authorised = false
+        UsersGroup.all.each do |ug|
+            if ug.user_id == session[:user_id] && ug.group_id == @group.id && ug.member_type == 0
+              authorised = true
+            end
+        end
+      unless authorised == true
+        flash[:error] = "You do not have Admin privileges for this group"
+        redirect_to home_path
+      end
+    end
+
+
+
     def change_member_value(user_id, group_id, change_value)
       @ug = UsersGroup.find_by(user_id: user_id, group_id: group_id)
-
-      @ug.update_attribute(:member_type, change_value.to_i)
+        case change_value
+        when "0", "1", "2"
+          @ug.update_attribute(:member_type, change_value.to_i)
+        when "3"
+          @ug.destroy
+        end
     end
 
 end

@@ -1,6 +1,16 @@
 <img src = <%=@image.image.url%>> </br>
-<%= link_to("Delete Image", delete_image_path(@image), :method => :delete) %>
+
+
+<% UsersGroup.all.each do |ug| %>
+  <%  if ug.user_id == session[:user_id] && ug.group_id == @group.id%>
+    <% if ug.member_type == 0 ||  ug.member_type == 1 || @current_user == @image.user %>
+  
+    <%= link_to("Delete Image", delete_image_path(@image), :method => :delete) %>
+    <% end %>
+  <%  end %>
+<% end %>
+
 <p>
-<%= @image.caption %>  
+<%= @image.caption %>
 </p>
 Uploaded on: <%=  @image.created_at %> by <%= User.find(@image.user_id).name %>
