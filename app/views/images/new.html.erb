@@ -9,19 +9,21 @@
 <%= f.text_field :caption, :required => false %>
 </p>
 
+<% groups_array = [] %>
 
 
-<% Group.all.each do |g| %>
-    <% UsersGroup.all.each do |mb| %>
-        <% if mb.user_id == @current_user.id && mb.group_id == g.id %>
-          <li>
-              <%= link_to g.name, g %>
-              <%= radio_button("group_id", "group_id", g.id) %>
 
-          </li>
-        <% end %>
-    <% end %>
-<% end %>
+  <% Group.all.each do |g| %>
+      <% UsersGroup.all.each do |mb| %>
+          <% if mb.user_id == @current_user.id && mb.group_id == g.id %>
+                <% groups_array << [g.name, g.id] %>
+          <% end %>
+      <% end %>
+  <% end %>
+
+<%= f.select :group_id, groups_array %>
+
+
 
 
 
