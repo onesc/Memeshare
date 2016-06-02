@@ -8,25 +8,27 @@
 
 
 <p>
-<b> <%= @group.name %> </b> </br>
+<div class = "group-name"><b> <%= @group.name %> </b> </div> </br>
 <% if @group.joinable %>
 Join Code:  <%= @group.join_code %>
-<% end %>
+<% end %> <br/>
 <% UsersGroup.all.each do |ug| %>
   <%  if ug.user_id == session[:user_id] && ug.group_id == @group.id && ug.member_type == 0 %>
     <%= link_to("Admin Page", admin_page_path(@group), :method => :get) %>
   <%  end %>
 <% end %>
+<%= link_to("Leave Group",leave_group_path(@group), :method => :delete) %>
 
 </p>
-<p>
+<!-- <p>
   <h4>Members </h4>
   <% @group_members.each do |m| %>
       <%= m.name %>,
   <% end %>
-</p>
+</p> -->
 
-<%= link_to("Leave Group",leave_group_path(@group), :method => :delete) %>
+<hr>
+
 
 <% if @images.length == 0 %>
   <h2>This group has no content!</h2>
@@ -35,7 +37,8 @@ Join Code:  <%= @group.join_code %>
 
 <% @images.reverse.each do |i| %>
 <p>
-   <img src = <%=i.image.url%>> </br>
+   
+   <%= link_to image_tag(i.image.url), i %>
 
    <p>
    <%= i.caption %>

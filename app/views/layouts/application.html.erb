@@ -9,11 +9,6 @@
 </head>
 <body>
 
-    <% if flash[:error].present? %>
-      <h2 class="error">
-        <%= flash[:error] %>
-      </h2>
-    <% end %>
 
 
     <nav class="navbar navbar-default">
@@ -63,6 +58,12 @@
       </div>
     </nav>
 
+    <% if flash[:error].present? %>
+      <h2 class="error">
+        <%= flash[:error] %>
+      </h2>
+    <% end %>
+
 
 <!-- <nav>
   <ul>
@@ -91,8 +92,8 @@
 
 
 
-
+<div class="container-fluid">
 <%= yield %>
-
+</div>
 </body>
 </html>

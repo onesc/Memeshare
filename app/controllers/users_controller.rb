@@ -5,15 +5,23 @@ class UsersController < ApplicationController
 
   def create
   #This wont save it to the database
-  @user = User.create user_params
-  #If it is able to tbe saved, show all of the users
-  #Otherwise just render the form
-  if @user.save
-    session[:user_id] = @user.id
-    redirect_to home_path
+
+
+  if User.find_by(email: params[:user][:email]) == nil
+      @user = User.create user_params
+      #If it is able to tbe saved, show all of the users
+      #Otherwise just render the form
+      if @user.save
+        session[:user_id] = @user.id
+        redirect_to home_path
+      else
+        render :new
+      end
   else
-    render :new
+    flash[:error] = "A user with that email already exists"
+    redirect_to new_user_path
   end
+
   end
 
 
