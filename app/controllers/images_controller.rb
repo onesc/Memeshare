@@ -8,8 +8,6 @@ class ImagesController < ApplicationController
 
   def create
       params[:image][:user_id] = @current_user.id
-
-
       if params[:image][:group_id] == nil
         raise "hell"
         flash[:error] = "You must choose a group to submit to"

@@ -9,15 +9,19 @@
 <%= f.text_field :caption, :required => false %>
 </p>
 
-<p> Submit to: 
+<p> Submit to:
+
+
+
 <% groups_array = [] %>
-  <% Group.all.each do |g| %>
-      <% UsersGroup.all.each do |mb| %>
-          <% if mb.user_id == @current_user.id && mb.group_id == g.id %>
-                <% groups_array << [g.name, g.id] %>
-          <% end %>
-      <% end %>
+
+<% @groups_belong_to.each do |g| %>
+  <% unless UsersGroup.find_by(user_id: session[:user_id], group_id: g.id).member_type == 4  %>
+  <% groups_array << [g.name, g.id] %>
   <% end %>
+<% end %>
+
+
 
 <%= f.select :group_id, groups_array %>
 </p>

@@ -1,6 +1,17 @@
+<% if @group_members.length == 1 %>
 <p>
-Group Name:  <b> <%= @group.name %> </b> </br>
+
+</p>
+<% end %>
+
+
+
+
+<p>
+<b> <%= @group.name %> </b> </br>
+<% if @group.joinable %>
 Join Code:  <%= @group.join_code %>
+<% end %>
 <% UsersGroup.all.each do |ug| %>
   <%  if ug.user_id == session[:user_id] && ug.group_id == @group.id && ug.member_type == 0 %>
     <%= link_to("Admin Page", admin_page_path(@group), :method => :get) %>
@@ -9,23 +20,31 @@ Join Code:  <%= @group.join_code %>
 
 </p>
 <p>
-  <h2>Members </h2>
+  <h4>Members </h4>
   <% @group_members.each do |m| %>
-      <%= m.name %> <br/>
+      <%= m.name %>,
   <% end %>
 </p>
 
 <%= link_to("Leave Group",leave_group_path(@group), :method => :delete) %>
 
+<% if @images.length == 0 %>
+  <h2>This group has no content!</h2>
+  <h4> <%= link_to "Upload an Image", new_image_path %></h4>
+<% end %>
+
 <% @images.reverse.each do |i| %>
-<li>
-   <%= link_to "View Image", i %><img src = <%=i.image.url%>> </br>
- <b><%=  time_ago_in_words(i.created_at) %></b> ago by <b><%= User.find(i.user_id).name %></b>, <%= i.comments.length %> Comments
-</br>
 <p>
-<%= i.caption %>
-</p>
+   <img src = <%=i.image.url%>> </br>
+
+   <p>
+   <%= i.caption %>
+   </p>
+ <b><%=  time_ago_in_words(i.created_at) %></b> ago by <b><%= User.find(i.user_id).name %></b>, <%= i.comments.length %> Comments
+ <%= link_to "View Image", i %>
+</br>
+
 
 <hr>
-</li>
+</p>
 <% end %>

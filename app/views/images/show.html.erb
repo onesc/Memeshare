@@ -34,14 +34,15 @@ Uploaded on: <%=  @image.created_at %> by <b><%= User.find(@image.user_id).name 
 
 Go Back to <%= link_to @group.name, @group %>
 
+<% unless UsersGroup.find_by(user_id: session[:user_id], group_id: @group.id).member_type == 4  %>
+  <%= form_for @comment do |c| %>
+    <%= hidden_field_tag(:user_id, session[:user_id]) %>
+    <%= hidden_field_tag(:image_id, params[:id]) %>
+    <p>
+    <%= c.label :Comment %>
+    <%= c.text_field :content, :required => true %>
+    </p>
 
-<%= form_for @comment do |c| %>
-<%= hidden_field_tag(:user_id, session[:user_id]) %>
-<%= hidden_field_tag(:image_id, params[:id]) %>
-<p>
-<%= c.label :Comment %>
-<%= c.text_field :content, :required => true %>
-</p>
-
-<%= c.submit "Comment" %>
+    <%= c.submit "Comment" %>
+  <% end %>
 <% end %>

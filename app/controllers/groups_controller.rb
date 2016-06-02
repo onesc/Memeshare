@@ -51,7 +51,10 @@ class GroupsController < ApplicationController
             member_value = "Moderator"
           when 2
             member_value = "Member"
+          when 4
+            member_value = "Viewer"
           end
+
 
           @group_members << [User.find_by(id: ug.user_id).name, member_value, ug.user_id]
         end
@@ -144,7 +147,7 @@ class GroupsController < ApplicationController
     def change_member_value(user_id, group_id, change_value)
       @ug = UsersGroup.find_by(user_id: user_id, group_id: group_id)
         case change_value
-        when "0", "1", "2"
+        when "0", "1", "2", "4"
           @ug.update_attribute(:member_type, change_value.to_i)
         when "3"
           @ug.destroy

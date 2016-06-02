@@ -18,6 +18,32 @@
 
 
 <br/>
+
+
+<h3>Change a Member Type</h3>
+
+<p>
+<%= form_tag("/change_member", method: "post") do %>
+<%= hidden_field_tag(:group_id, @group.id) %>
+<%= select_tag :user_id, options_for_select(@group_members.each) %>
+<%= select_tag :change_value, options_for_select([ ['Viewer', 4], ['Member', 2],['Moderator', 1],['Creator', 0], ['Remove', 3]]) %>
+<%= submit_tag("Change Member")  %>
+<% end %>
+</p>
+
+<p>
+  <ul>
+    <li><b>Viewers</b> may only view content</li>
+    <li><b>Members</b> can upload and comment on photos, and remove their own content</li>
+    <li><b>Moderators</b> can remove other peoples images and comments</li>
+    <li><b>Creators</b> can access this admin panel</li>
+    <li><b>Remove</b> will remove the member from the group</li>
+  </ul>
+  <p>
+    All users are <b>Members</b> upon joining a Group 
+  </p>
+</p>
+
 <h3>Members</h3>
 <p>
     <% @group_members.each do |m| %>
@@ -25,17 +51,6 @@
       <%= m[0] %> - <%= m[1] %>
     </li>
     <% end %>
-</p>
-
-
-
-<p>
-<%= form_tag("/change_member", method: "post") do %>
-<%= hidden_field_tag(:group_id, @group.id) %>
-<%= select_tag :user_id, options_for_select(@group_members.each) %>
-<%= select_tag :change_value, options_for_select([['Creator', 0],['Moderator', 1], ['Member', 2], ['Remove', 3]]) %>
-<%= submit_tag("Change Member")  %>
-<% end %>
 </p>
 
 Go Back to <%= link_to @group.name, @group %>
