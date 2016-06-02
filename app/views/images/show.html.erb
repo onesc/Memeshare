@@ -4,7 +4,7 @@
 <% UsersGroup.all.each do |ug| %>
   <%  if ug.user_id == session[:user_id] && ug.group_id == @group.id%>
     <% if ug.member_type == 0 ||  ug.member_type == 1 || @current_user == @image.user %>
-  
+
     <%= link_to("Delete Image", delete_image_path(@image), :method => :delete) %>
     <% end %>
   <%  end %>
@@ -13,4 +13,34 @@
 <p>
 <%= @image.caption %>
 </p>
-Uploaded on: <%=  @image.created_at %> by <%= User.find(@image.user_id).name %>
+Uploaded on: <%=  @image.created_at %> by <b><%= User.find(@image.user_id).name %> </b>
+
+
+
+<p>
+  <% @image.comments.reverse.each do |c| %>
+    <li>
+      "<%= c.content %>" - <%= c.user.name %> at <%= c.created_at %>
+
+                                    <% UsersGroup.all.each do |ug| %>
+                                      <%  if c.user_id == session[:user_id] || ug.user_id == session[:user_id] && ug.member_type == 0 || ug.user_id == session[:user_id] && ug.member_type == 1 %>
+                                        <%= link_to("Delete Comment", delete_comment_path(:comment_id => c, :image => @image), :method => :delete) %>
+                                        <% break %>
+                                      <%  end %>
+                                    <% end %>
+    </li>
+  <% end %>
+</p>
+
+
+
+<%= form_for @comment do |c| %>
+<%= hidden_field_tag(:user_id, session[:user_id]) %>
+<%= hidden_field_tag(:image_id, params[:id]) %>
+<p>
+<%= c.label :Comment %>
+<%= c.text_field :content, :required => true %>
+</p>
+
+<%= c.submit "Comment" %>
+<% end %>

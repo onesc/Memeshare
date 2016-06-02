@@ -21,6 +21,7 @@ class ImagesController < ApplicationController
   end
 
   def show
+      @comment = Comment.new
       @image = Image.find params[:id]
       @group = Group.find(@image.group_id)
   end

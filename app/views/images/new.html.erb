@@ -9,10 +9,8 @@
 <%= f.text_field :caption, :required => false %>
 </p>
 
+<p> Submit to: 
 <% groups_array = [] %>
-
-
-
   <% Group.all.each do |g| %>
       <% UsersGroup.all.each do |mb| %>
           <% if mb.user_id == @current_user.id && mb.group_id == g.id %>
@@ -22,7 +20,7 @@
   <% end %>
 
 <%= f.select :group_id, groups_array %>
-
+</p>
 
 
 

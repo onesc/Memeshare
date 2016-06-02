@@ -2,9 +2,10 @@ Rails.application.routes.draw do
   get '/login' => 'session#new', :as => 'login'
     post '/login' => 'session#create'
     delete '/login' => 'session#destroy', :as => 'logout'
-
+    delete '/delete_comment' => 'comments#destroy', :as => 'delete_comment'
     delete 'delete_image' => 'images#destroy', :as => 'delete_image'
     delete '/users_groups' => 'users_groups#destroy', :as  =>'leave_group'
+
 
     get '/admin_page' => 'groups#admin', :as => 'admin_page'
 
@@ -12,9 +13,10 @@ Rails.application.routes.draw do
 
     get '/toggle_joinable' => 'groups#toggle_joinable'
 
+
   resources :users_groups, :only => [:new, :create]
   resources :images, :only => [:new, :show, :create, :edit, :update]
-
+resources :comments
 resources :groups, :only => [:new, :show, :create, :index, :edit, :update]
 resources :users, :only => [:new, :create, :index, :edit, :update]
   root 'welcome#index', :as => 'home'
