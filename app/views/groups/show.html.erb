@@ -20,7 +20,7 @@ Join Code:  <%= @group.join_code %>
 <% @images.reverse.each do |i| %>
 <li>
    <%= link_to "View Image", i %><img src = <%=i.image.url%>> </br>
-Uploaded on: <%=  i.created_at %> by <%= User.find(i.user_id).name %>
+ <b><%=  time_ago_in_words(i.created_at) %></b> ago by <b><%= User.find(i.user_id).name %></b>, <%= i.comments.length %> Comments
 </br>
 <p>
 <%= i.caption %>

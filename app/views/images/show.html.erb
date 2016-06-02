@@ -20,7 +20,7 @@ Uploaded on: <%=  @image.created_at %> by <b><%= User.find(@image.user_id).name 
 <p>
   <% @image.comments.reverse.each do |c| %>
     <li>
-      "<%= c.content %>" - <%= c.user.name %> at <%= c.created_at %>
+      "<%= c.content %>" - <%= c.user.name %> - <%= time_ago_in_words(c.created_at) %>
 
                                     <% UsersGroup.all.each do |ug| %>
                                       <%  if c.user_id == session[:user_id] || ug.user_id == session[:user_id] && ug.member_type == 0 || ug.user_id == session[:user_id] && ug.member_type == 1 %>
