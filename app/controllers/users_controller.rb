@@ -9,7 +9,8 @@ class UsersController < ApplicationController
   #If it is able to tbe saved, show all of the users
   #Otherwise just render the form
   if @user.save
-    redirect_to users_path
+    session[:user_id] = @user.id
+    redirect_to home_path
   else
     render :new
   end

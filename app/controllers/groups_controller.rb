@@ -1,13 +1,14 @@
 class GroupsController < ApplicationController
     before_action :authorise, :only => [:new]
 
+
   def new
       @group = Group.new
   end
 
   def create
 
-    params[:group][:join_code] = SecureRandom.hex(10)
+    params[:group][:join_code] = SecureRandom.hex(15)
     @group_id = params[:group][:id]
     @group = Group.create group_params
     creator
@@ -38,6 +39,8 @@ class GroupsController < ApplicationController
 
     @group = Group.find params[:format]
     authorise_admin
+    redirect_to home_path unless @authorised == true
+
     @group_members = []
     UsersGroup.all.each do |ug|
         if ug.group_id == @group.id
@@ -61,13 +64,22 @@ class GroupsController < ApplicationController
   end
 
   def member_change
-
       change_member_value(params[:user_id], params[:group_id], params[:change_value])
       redirect_to admin_page_path(Group.find(params[:group_id]))
   end
 
 
 
+  def set_new_code
+    @group = Group.find(params[:group_id])
+    authorise_admin
+    if @authorised == true
+      @group.update_attribute(:join_code, SecureRandom.hex(15))
+      redirect_to admin_page_path(@group) and return
+    else
+      redirect_to home_path
+    end
+  end
 
 
     private
@@ -88,6 +100,8 @@ class GroupsController < ApplicationController
       member_ass = UsersGroup.new(user_id: @current_user.id, group_id: @group.id, member_type: 0)
       member_ass.save
     end
+
+
 
 
     def comment_params
@@ -112,15 +126,16 @@ class GroupsController < ApplicationController
 
 
     def authorise_admin
-      authorised = false
+      @authorised = false
         UsersGroup.all.each do |ug|
             if ug.user_id == session[:user_id] && ug.group_id == @group.id && ug.member_type == 0
-              authorised = true
+              @authorised = true
+              return @authorised
             end
         end
-      unless authorised == true
+      unless @authorised == true
         flash[:error] = "You do not have Admin privileges for this group"
-        redirect_to home_path
+        return @authorised
       end
     end
 

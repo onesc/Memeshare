@@ -12,6 +12,9 @@
   <%= link_to "Enable Join Code", {:controller => "groups", :action => "toggle_joinable", :group_id => @group.id} %>
   <% end %>
 </p>
+<p>
+  <%= link_to "Generate New Join Code", {:controller => "groups", :action => "set_new_code", :group_id => @group.id} %>
+</p>
 
 
 <br/>
@@ -34,3 +37,5 @@
 <%= submit_tag("Change Member")  %>
 <% end %>
 </p>
+
+Go Back to <%= link_to @group.name, @group %>

@@ -7,12 +7,13 @@ Rails.application.routes.draw do
     delete '/users_groups' => 'users_groups#destroy', :as  =>'leave_group'
 
 
+
     get '/admin_page' => 'groups#admin', :as => 'admin_page'
 
     post '/change_member' => 'groups#member_change', :as => 'member_change'
 
     get '/toggle_joinable' => 'groups#toggle_joinable'
-
+    get '/set_new_code' => 'groups#set_new_code'
 
   resources :users_groups, :only => [:new, :create]
   resources :images, :only => [:new, :show, :create, :edit, :update]

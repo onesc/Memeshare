@@ -32,6 +32,7 @@ Uploaded on: <%=  @image.created_at %> by <b><%= User.find(@image.user_id).name 
   <% end %>
 </p>
 
+Go Back to <%= link_to @group.name, @group %>
 
 
 <%= form_for @comment do |c| %>
