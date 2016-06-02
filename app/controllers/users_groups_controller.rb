@@ -1,10 +1,5 @@
 class UsersGroupsController < ApplicationController
- #  enum member_type: {
- #   creator: 0,
- #   moderator: 1,
- #   member: 2,
- #   god: 3
- # }
+
 
  def new
      @new_member = UsersGroup.new
@@ -21,11 +16,11 @@ class UsersGroupsController < ApplicationController
    end
  end
 
- def destroy
-  member_ass = UsersGroup.find_by(user_id: @current_user.id, group_id: params["format"])
-  member_ass.destroy
-  redirect_to home_path
-end
+  def destroy
+    member_ass = UsersGroup.find_by(user_id: @current_user.id, group_id: params["format"])
+    member_ass.destroy
+    redirect_to home_path
+  end
 
 
 
