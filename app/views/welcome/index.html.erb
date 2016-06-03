@@ -6,8 +6,8 @@
   <% if @groups_belong_to.length == 0 %>
     <h1>Welcome to MemeGround!</h1>
     <h2>To get started, create or join an existing group.</h2>
-    <li><%= link_to "Create Group", new_group_path %></li>
-    <li><%= link_to "Join Group", new_users_group_path %></li>
+    <h3><%= link_to "Create Group", new_group_path %></h3>
+    <h3><%= link_to "Join Group", new_users_group_path %></h3>
 
 
   <% elsif @images.length == 0 %>

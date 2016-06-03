@@ -1,6 +1,55 @@
-<img src = <%=@image.image.url%>> </br>
 
 
+
+<h2>
+<%= @image.caption %>
+</h2>
+<div style = "padding-top: 10px">
+<p>Uploaded <%=  time_ago_in_words(@image.created_at) %> ago by<b> <%= User.find(@image.user_id).name %></p> </b>
+</div>
+<hr> <img src = <%=@image.image.url%>> </br> <hr>
+
+
+
+
+
+
+
+<div class = "comment-container"
+<p>
+  <% @image.comments.each do |c| %>
+    <div class = "comment">
+      <span class = "comment-text"><%=  truncate(c.content, :length => 75) %></span> <span class = "comment-info" <b> <%= c.user.name %></b> - <%= time_ago_in_words(c.created_at) %> ago
+
+                                    <% UsersGroup.all.each do |ug| %>
+                                      <%  if c.user_id == session[:user_id] || ug.user_id == session[:user_id] && ug.member_type == 0 || ug.user_id == session[:user_id] && ug.member_type == 1 %>
+                                        <%= link_to("Delete Comment", delete_comment_path(:comment_id => c, :image => @image), :method => :delete) %>
+                                        <% break %>
+                                      <%  end %>
+                                    <% end %> </span>
+    </div>
+  <% end %>
+</p>
+</div>
+<br/>
+
+
+<% unless UsersGroup.find_by(user_id: session[:user_id], group_id: @group.id).member_type == 4  %>
+  <%= form_for @comment do |c| %>
+    <%= hidden_field_tag(:user_id, session[:user_id]) %>
+    <%= hidden_field_tag(:image_id, params[:id]) %>
+    <p>
+
+    <%= c.text_field :content, :required => true %>
+    </p>
+
+    <%= c.submit "Comment" %>
+  <% end %>
+<% end %>
+
+<br/>
+<div style = "margin-top: 50px;"
+<p>Go Back to <%= link_to @group.name, @group %> </p>
 <% UsersGroup.all.each do |ug| %>
   <%  if ug.user_id == session[:user_id] && ug.group_id == @group.id%>
     <% if ug.member_type == 0 ||  ug.member_type == 1 || @current_user == @image.user %>
@@ -9,42 +58,4 @@
     <% end %>
   <%  end %>
 <% end %>
-
-<h4>
-<%= @image.caption %>
-</h4>
-Uploaded on: <%=  @image.created_at %> by <b><%= User.find(@image.user_id).name %> </b>
-
-
-<br/>
-<br/>
-<p>
-  <% @image.comments.reverse.each do |c| %>
-    <p>
-      "<%= c.content %>" - <%= c.user.name %> - <%= time_ago_in_words(c.created_at) %>
-
-                                    <% UsersGroup.all.each do |ug| %>
-                                      <%  if c.user_id == session[:user_id] || ug.user_id == session[:user_id] && ug.member_type == 0 || ug.user_id == session[:user_id] && ug.member_type == 1 %>
-                                        <%= link_to("Delete Comment", delete_comment_path(:comment_id => c, :image => @image), :method => :delete) %>
-                                        <% break %>
-                                      <%  end %>
-                                    <% end %>
-    </p>
-  <% end %>
-</p>
-<br/>
-
-Go Back to <%= link_to @group.name, @group %>
-
-<% unless UsersGroup.find_by(user_id: session[:user_id], group_id: @group.id).member_type == 4  %>
-  <%= form_for @comment do |c| %>
-    <%= hidden_field_tag(:user_id, session[:user_id]) %>
-    <%= hidden_field_tag(:image_id, params[:id]) %>
-    <p>
-    <%= c.label :Comment %>
-    <%= c.text_field :content, :required => true %>
-    </p>
-
-    <%= c.submit "Comment" %>
-  <% end %>
-<% end %>
+</div>

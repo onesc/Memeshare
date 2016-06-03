@@ -6,8 +6,10 @@ class UsersGroupsController < ApplicationController
  end
 
  def create
+
    @joincode = params["users_group"]["user_id"]
    @group = Group.find_by(join_code: @joincode)
+  
    if Group.find_by(join_code: @joincode) == nil
      redirect_to home_path
    else

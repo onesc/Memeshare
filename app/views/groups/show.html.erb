@@ -10,7 +10,7 @@
 <p>
 <div class = "group-name"><b> <%= @group.name %> </b> </div> </br>
 <% if @group.joinable %>
-Join Code:  <%= @group.join_code %>
+Join Code:  <%=@group.join_code%>
 <% end %> <br/>
 <% UsersGroup.all.each do |ug| %>
   <%  if ug.user_id == session[:user_id] && ug.group_id == @group.id && ug.member_type == 0 %>

@@ -46,7 +46,7 @@ class GroupsController < ApplicationController
         if ug.group_id == @group.id
           case ug.member_type
           when 0
-            member_value = "Creator"
+            member_value = "Admin"
           when 1
             member_value = "Moderator"
           when 2

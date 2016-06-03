@@ -1,14 +1,16 @@
-<p>
-  Admin page for <b><%= @group.name %> </b>
-</p>
+<h4>
+  Admin page for <b><%= link_to @group.name, @group %> </b>
+</h4>
+<hr>
+
 
 <p>
   The Join Code is: <b><%= @group.join_code %> </b>
   <% if @group.joinable == true %>
-  <p>The Group is Currently<b> Joinable </b></p>
+  <p>The Group is Currently<b> Joinable </b> </b></p>
   <%= link_to "Disable Join Code", {:controller => "groups", :action => "toggle_joinable", :group_id => @group.id} %>
   <% else %>
-  <p>The Group is Currently <b> Unjoinable </b></p>
+  <p>The Group is Currently <b> Unjoinable </b></b></p>
   <%= link_to "Enable Join Code", {:controller => "groups", :action => "toggle_joinable", :group_id => @group.id} %>
   <% end %>
 </p>
@@ -17,34 +19,35 @@
 </p>
 
 
+<hr>
+
+
+<h3>Change/Remove a Member</h3>
 <br/>
-
-
-<h3>Change a Member Type</h3>
-
 <p>
 <%= form_tag("/change_member", method: "post") do %>
 <%= hidden_field_tag(:group_id, @group.id) %>
 <%= select_tag :user_id, options_for_select(@group_members.each) %>
-<%= select_tag :change_value, options_for_select([ ['Viewer', 4], ['Member', 2],['Moderator', 1],['Creator', 0], ['Remove', 3]]) %>
+<%= select_tag :change_value, options_for_select([['Admin', 0], ['Viewer', 4], ['Member', 2],['Moderator', 1], ['Remove', 3]]) %>
 <%= submit_tag("Change Member")  %>
 <% end %>
 </p>
-
+<br/>
 <p>
   <ul>
-    <li><b>Viewers</b> may only view content</li>
-    <li><b>Members</b> can upload and comment on photos, and remove their own content</li>
-    <li><b>Moderators</b> can remove other peoples images and comments</li>
-    <li><b>Creators</b> can access this admin panel</li>
-    <li><b>Remove</b> will remove the member from the group</li>
+    <p><b>Viewers</b> may only view content</p>
+    <p><b>Members</b> may upload and comment on photos, and remove their own content</p>
+    <p><b>Moderators</b> can remove other peoples images and comments</p>
+    <p><b>Admins</b> can do all of the above, and they can access this admin panel</p>
+    <p><b>Remove</b> will remove the selected member from the group</p>
   </ul>
   <p>
-    All users are <b>Members</b> upon joining a Group 
+  When a User joins a Group, they are set as a <b>Member</b>
   </p>
 </p>
 
-<h3>Members</h3>
+<hr>
+<h3>Members of <%= @group.name %></h3>
 <p>
     <% @group_members.each do |m| %>
     <li>
