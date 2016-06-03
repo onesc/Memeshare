@@ -30,6 +30,9 @@
 
   <% else %>
 
+  <h4>Log In</h4>
+
+<p>
   <%= form_tag login_path do %>
     <p>
       <%= label_tag :email %>
@@ -43,6 +46,9 @@
 
     <%= submit_tag "Login" %>
   <% end %>
+<br/>
+    <h3><%= link_to "Sign Up", new_user_path %> </h3>
+    </p>
 <% end %>
 
 

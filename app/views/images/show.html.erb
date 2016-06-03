@@ -10,16 +10,17 @@
   <%  end %>
 <% end %>
 
-<p>
+<h4>
 <%= @image.caption %>
-</p>
+</h4>
 Uploaded on: <%=  @image.created_at %> by <b><%= User.find(@image.user_id).name %> </b>
 
 
-
+<br/>
+<br/>
 <p>
   <% @image.comments.reverse.each do |c| %>
-    <li>
+    <p>
       "<%= c.content %>" - <%= c.user.name %> - <%= time_ago_in_words(c.created_at) %>
 
                                     <% UsersGroup.all.each do |ug| %>
@@ -28,9 +29,10 @@ Uploaded on: <%=  @image.created_at %> by <b><%= User.find(@image.user_id).name 
                                         <% break %>
                                       <%  end %>
                                     <% end %>
-    </li>
+    </p>
   <% end %>
 </p>
+<br/>
 
 Go Back to <%= link_to @group.name, @group %>
 
