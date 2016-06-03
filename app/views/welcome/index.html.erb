@@ -8,9 +8,9 @@
     <h2>To get started, create or join an existing group.</h2>
     <li><%= link_to "Create Group", new_group_path %></li>
     <li><%= link_to "Join Group", new_users_group_path %></li>
-  <% end %>
 
-  <% if @images.length == 0 %>
+
+  <% elsif @images.length == 0 %>
       <h3>Now, <%= link_to "Upload an Image", new_image_path %> to your group!</h3>
   <% end %>
 
